@@ -33,7 +33,7 @@ class ProjectFactory extends Factory
             'title' => $title,
             'slug' => $slug,
             'type_id' => Arr::random($type_ids),
-            'content' => fake()->paragraph(),
+            'content' => fake()->text(1000),
             'image' => $img_url,
         ];
     }

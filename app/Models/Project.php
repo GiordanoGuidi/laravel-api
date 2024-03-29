@@ -23,10 +23,15 @@ class Project extends Model
         return $this->belongsToMany(Technology::class);
     }
 
-    //Accessor
-    public function image(): Attribute
+    public function user()
     {
-        return Attribute::make(fn ($value) => $value && app('request')->is('api/*')
-            ? url('storage/' . $value) : $value);
+        return $this->belongsTo(User::class);
     }
+
+    //Accessor
+    // public function image(): Attribute
+    // {
+    //     return Attribute::make(fn ($value) => $value && app('request')->is('api/*')
+    //         ? url('storage/' . $value) : $value);
+    // }
 }
