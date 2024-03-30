@@ -82,6 +82,11 @@
         @foreach ($types as $type)
         <div class="col">
             <h6>{{$type->label }}({{count($type->projects)}}) </h6>
+            @forelse($type->projects as $project)
+                <a href="{{route('admin.projects.show',$project)}}" class="text-decoration-none">{{$project->title}}</a> <br>
+            @empty
+                <p>Nussun Progetto</p>
+            @endforelse
         </div>
         @endforeach
       </div>
