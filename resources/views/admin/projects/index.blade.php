@@ -77,6 +77,14 @@
             @endforelse
           </tbody>
       </table>
+      <h3>Progetti per Tipologia</h3>
+      <div class="row row-cols-3 g-4 mt-1">
+        @foreach ($types as $type)
+        <div class="col">
+            <h6>{{$type->label }}({{count($type->projects)}}) </h6>
+        </div>
+        @endforeach
+      </div>
       @if($projects->hasPages())
         {{$projects->links()}}
       @endif

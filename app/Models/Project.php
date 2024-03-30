@@ -29,9 +29,9 @@ class Project extends Model
     }
 
     //Accessor
-    // public function image(): Attribute
-    // {
-    //     return Attribute::make(fn ($value) => $value && app('request')->is('api/*')
-    //         ? url('storage/' . $value) : $value);
-    // }
+    public function image(): Attribute
+    {
+        return Attribute::make(fn ($value) => $value && app('request')->is('api/*')
+            ? url('storage/' . $value) : $value);
+    }
 }
