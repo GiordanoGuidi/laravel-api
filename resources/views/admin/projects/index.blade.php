@@ -6,7 +6,22 @@
 @section('content')
 {{--Index dei Progetti--}}
 <section id="projects-index" class="my-5">
-    <h1 class="mb-5">Projects</h1>
+    
+    <div class="d-flex justify-content-between">
+        <h1 class="mb-5">Projects</h1>
+        <form action="{{route('admin.projects.index')}}" method="GET">
+            @csrf
+            <div class="input-group">
+                <select class="form-select" name="type_filter">
+                  <option value="">Tutti</option>
+                  @foreach ($types as $type)
+                  <option value="{{$type->id}}" @if($type->id == $type_filter) selected @endif>{{$type->label}}</option>
+                  @endforeach
+                </select>
+                <button class="btn btn-outline-secondary">Filtra</button>
+              </div>
+        </form>
+    </div>
     {{--Tabella--}}
     <table class="table table-dark">
         <thead>

@@ -22,12 +22,20 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Type $type, User $user)
+    public function index(Type $type, User $user, Request $request)
     {
         $types = $type->all();
         $users = $user->all();
-        $projects = Project::orderByDesc('updated_at')->orderByDesc('created_at')->paginate(10);
-        return view('admin.projects.index', compact('projects', 'types', 'users'));
+
+        $type_filter = $request->query('type_filter');
+        $query = Project::orderByDesc('updated_at')->orderByDesc('created_at');
+
+        if ($type_filter) {
+            $query->where('type_id', $type_filter);
+        }
+
+        $projects = $query->paginate(10);
+        return view('admin.projects.index', compact('projects', 'types', 'users', 'type_filter'));
     }
 
     /**

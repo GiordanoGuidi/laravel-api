@@ -11,7 +11,7 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $projects = Project::orderByDesc('updated_at')->orderByDesc('created_at')->paginate();
         return response()->json($projects);
