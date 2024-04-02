@@ -22,15 +22,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
+    public function show(string $id)
     {
-        //
+        $project = Project::find($id);
+        //Se non trovo il progetto rispondo con un messaggio vuoto e codice 404
+        if (!$project) return response(null, 404);
+        //Altrimenti restituisco il progetto in formato JSON
+        return response()->json($project);
     }
 
     /**
