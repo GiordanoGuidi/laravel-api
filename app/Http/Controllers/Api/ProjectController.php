@@ -13,7 +13,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $projects = Project::orderByDesc('updated_at')->orderByDesc('created_at')->paginate();
+        $projects = Project::orderByDesc('updated_at')->orderByDesc('created_at')->paginate(3);
         return response()->json($projects);
     }
 
@@ -27,9 +27,9 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        $project = Project::find($id);
+        $project = Project::whereSlug($slug)->first();
         //Se non trovo il progetto rispondo con un messaggio vuoto e codice 404
         if (!$project) return response(null, 404);
         //Altrimenti restituisco il progetto in formato JSON
