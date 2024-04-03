@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Type;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +29,8 @@ class ProjectFactory extends Factory
 
         $type_ids = Type::pluck('id')->toArray();
         $type_ids[] = null;
+        $user_ids = User::pluck('id')->toArray();
+        $user_ids[] = null;
 
         return [
             'title' => $title,
@@ -35,6 +38,8 @@ class ProjectFactory extends Factory
             'type_id' => Arr::random($type_ids),
             'content' => fake()->text(1000),
             'image' => $img_url,
+            'user_id' => Arr::random($user_ids),
+
         ];
     }
 }
