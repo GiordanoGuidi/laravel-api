@@ -11,9 +11,9 @@ class TypeProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __invoke(string $id)
+    public function __invoke(string $slug)
     {
-        $type = Type::find($id);
+        $type = Type::whereSlug($slug)->first();
         if (!$type) return response(null, 404);
         $type->load('projects.user', 'projects.type', 'projects.technologies');
         $projects = $type->projects;

@@ -23,4 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{slug}', [ProjectController::class, 'show']);
 //Rotta per i post legati a una categoria
-Route::get('types/{id}/projects', TypeProjectController::class);
+Route::get('types/{slug}/projects', TypeProjectController::class);
