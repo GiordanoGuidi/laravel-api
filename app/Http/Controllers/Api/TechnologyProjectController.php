@@ -3,17 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use App\Models\Technology;
 use Illuminate\Http\Request;
 
 class TechnologyProjectController extends Controller
 {
-    public function __invoke(string $id)
+    public function __invoke(string $slug)
     {
-        $technology = Technology::whereId($id);
+        $technology = Technology::whereSlug($slug)->first();
         if (!$technology) return response(null, 404);
-        $projects = $technology->projects;
+        $technology_id = $technology->id;
 
-        return response()->json($projects);
+        $projects = Project::whereHas('technologies', function ($query) use ($technology_id) {
+            $query->where('technologies.id', $technology_id);
+        })->get();
+
+        return response()->json(['projects' => $projects, 'label' => $technology->label]);
     }
 }
