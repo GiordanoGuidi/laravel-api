@@ -26,4 +26,4 @@ Route::get('/projects/{slug}', [ProjectController::class, 'show']);
 //Rotta per i post legati a una categoria
 Route::get('types/{slug}/projects', TypeProjectController::class);
 //Rotta per i post legati alle tecnologie
-Route::get('technologies/{id}/projects', TechnologyProjectController::class);
+Route::get('technologies/{slug}/projects', TechnologyProjectController::class);
