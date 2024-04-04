@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('technologies', function (Blueprint $table) {
+            //Aggiungiamo colonna slug
             $table->string('slug', 50)->unique()->after('label');
         });
     }
@@ -22,6 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('technologies', function (Blueprint $table) {
+            //Rimuoviamo colnna slug
             $table->dropColumn('slug');
         });
     }

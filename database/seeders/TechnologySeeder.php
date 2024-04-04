@@ -6,6 +6,8 @@ use App\Models\Project;
 use App\Models\Technology;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+
 
 class TechnologySeeder extends Seeder
 {
@@ -30,6 +32,7 @@ class TechnologySeeder extends Seeder
             $new_technology = new Technology();
             $new_technology->label = $technology['label'];
             $new_technology->color = $technology['color'];
+            $new_technology->slug = Str::slug($technology['label']);
             $new_technology->save();
 
             // $technology_projects = [];
