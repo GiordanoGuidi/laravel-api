@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TechnologyProjectController;
 use App\Http\Controllers\Api\TypeProjectController;
@@ -27,3 +28,5 @@ Route::get('/projects/{slug}', [ProjectController::class, 'show']);
 Route::get('types/{slug}/projects', TypeProjectController::class);
 //Rotta per i post legati alle tecnologie
 Route::get('technologies/{slug}/projects', TechnologyProjectController::class);
+//Rotta per ricevere un messaggio
+Route::post('/contact-message', [ContactController::class, 'message']);
