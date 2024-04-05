@@ -17,7 +17,7 @@ class TechnologyProjectController extends Controller
 
         $projects = Project::whereHas('technologies', function ($query) use ($technology_id) {
             $query->where('technologies.id', $technology_id);
-        })->get();
+        })->with('user', 'technologies', 'type')->get();
 
         return response()->json(['projects' => $projects, 'label' => $technology->label]);
     }
