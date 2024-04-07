@@ -9,6 +9,7 @@
     
     <div class="d-flex justify-content-between">
         <h1 class="mb-5">Projects</h1>
+        {{--Filtro per Tipologia--}}
         <form action="{{route('admin.projects.index')}}" method="GET">
             @csrf
             <div class="input-group">
@@ -19,7 +20,7 @@
                   @endforeach
                 </select>
                 <button class="btn btn-outline-secondary">Filtra</button>
-              </div>
+            </div>
         </form>
     </div>
     {{--Tabella--}}

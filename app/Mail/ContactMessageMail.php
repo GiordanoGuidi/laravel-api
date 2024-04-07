@@ -27,7 +27,7 @@ class ContactMessageMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Message Mail',
+            subject: 'Nuovo Messaggio',
         );
     }
 
@@ -37,7 +37,7 @@ class ContactMessageMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mails.contacts.message',
         );
     }
 
