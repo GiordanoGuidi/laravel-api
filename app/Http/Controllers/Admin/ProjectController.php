@@ -15,7 +15,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Technology;
 use App\Models\Type;
 use App\Models\User;
-use Illuminate\Validation\Rule;
+use App\Mail\ContactMessageMail;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Api\ContactController;
+
 
 class ProjectController extends Controller
 {
@@ -71,6 +74,13 @@ class ProjectController extends Controller
         if (Arr::exists($data, 'technologies')) {
             $project->technologies()->attach($data['technologies']);
         }
+
+        // Invio dell'email di notifica alla creazione di un nuovo Progetto
+        $email = env('MAIL_TO_ADDRESS');
+        $subject = 'Nuovo progetto creato';
+        $message = 'È stato creato un nuovo progetto: ' . $project->title;
+        Mail::to(env('MAIL_TO_ADDRESS'))->send(new ContactMessageMail($email, $subject, $message));
+
         return to_route('admin.projects.show', $project->id)
             //Flash data
             ->with('message', "Progetto {$project->title} creato con successo")

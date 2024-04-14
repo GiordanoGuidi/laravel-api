@@ -15,16 +15,21 @@ class ContactController extends Controller
         //Prendo tutti i dati passati nella request
         $data = $request->all();
 
-        $validator = Validator::make($data, [
-            'email' => 'required|email',
-            'subject' => 'required|string',
-            'message' => 'required|string',
-        ], [
-            'email.required' => 'Il campo email è obbligatorio',
-            'email.email' => 'La mail non è valida',
-            'subject.required' => 'L\'oggetto della mail è obbligatorio',
-            'message.required' => 'Il messaggio della mail è obbligatorio',
-        ]);
+        $validator = Validator::make(
+            $data,
+            [
+                'email' => 'required|email',
+                'subject' => 'required|string',
+                'message' => 'required|string',
+            ],
+            //Messaggi di errore personalizzati
+            [
+                'email.required' => 'Il campo email è obbligatorio',
+                'email.email' => 'La mail non è valida',
+                'subject.required' => 'L\'oggetto della mail è obbligatorio',
+                'message.required' => 'Il messaggio della mail è obbligatorio',
+            ]
+        );
 
         /*Facciamo restituire al validatore soltannto il primo
         messaggio di errore per ogni campo sbagliato*/
@@ -35,7 +40,7 @@ class ContactController extends Controller
             }
             return response()->json(compact('errors'), 422);
         }
-
+        //Istanziamo ContactMessageMail
         $mail = new ContactMessageMail(
             subject: $data['subject'],
             sender: $data['email'],
