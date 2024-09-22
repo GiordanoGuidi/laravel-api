@@ -19,8 +19,13 @@
               <th scope="col" class="text-end">
                 <div class="d-flex justify-content-end gap-2 ">
                     {{--Elimina--}}{{--implementare funzione svuota cestino--}}
-                    <a class="btn btn-danger">
-                        <i class="fa-solid fa-trash-can me-1"></i>Svuota cestino</a>
+                    <form action="{{route('admin.projects.dropAll')}}" class="form-deleteAll" method="POST">
+                    @csrf
+                    @method('DELETE')
+                        <button class="btn btn-danger">
+                            <i class="fa-solid fa-trash-can me-1"></i>Svuota cestino
+                        </button>
+                    </form>
                 </div>
               </th>
             </tr>
@@ -88,6 +93,14 @@
                 if(confirmation) form.submit();
             })
         });
+
+        const formDeleteAll= document.querySelector('.form-deleteAll');
+        formDeleteAll.addEventListener('submit',e=>{
+            e.preventDefault();
+            const confirmation = confirm(`Sei sicuro di voler eliminare definitivamente tutti i progetti?`);
+            if (confirmation) formDeleteAll.submit();
+        })
+        
 
     </script>
 @endsection
