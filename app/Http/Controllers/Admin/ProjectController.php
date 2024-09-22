@@ -186,4 +186,19 @@ class ProjectController extends Controller
             ->with('type', 'danger')
             ->with('message', "Progetto {$project->title} eliminato definitivamente");
     }
+
+    public function dropAll()
+    {
+        // mi assicuro che i progetti eliminati vengano selezionati correttamente.
+        $deletedProjects = Project::onlyTrashed()->get();
+        // dd($deletedProjects);
+        if ($deletedProjects->isEmpty()) {
+            return redirect()->route('admin.projects.index')->with('message', 'Nessun progetto da eliminare definitivamente.');
+        }
+        // Elimino definitivamente tutti i progetti eliminati
+        Project::onlyTrashed()->forceDelete();
+        return to_route('admin.projects.trash')
+            ->with('type', 'danger')
+            ->with('message', "Hai eliminato tutti i progetti definitivamente");
+    }
 }
