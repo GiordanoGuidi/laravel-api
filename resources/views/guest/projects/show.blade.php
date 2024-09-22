@@ -2,13 +2,18 @@
 
 @section('title','Project')
 
+@section('cdns')
+<!-- Includo il CSS compilato da Vite -->
+@vite('resources/scss/generics.scss',)
+@endsection
+
 @section('content')
     <section id="guest-show" class="my-5">
         <h1 class="mb-5">{{$project->title}}</h1>
         <div>
             <div class="clearfix">
                 @if($project->image)
-                    <img class="float-start me-5" src="{{asset('storage/' . $project->image)}}" alt="{{$project->title}}">
+                    <img class="float-start me-5 mb-3 img-project" src="{{asset('storage/' . $project->image)}}" alt="{{$project->title}}">
                     @endif
                 <p>{{$project->content}}</p>
                 <div>

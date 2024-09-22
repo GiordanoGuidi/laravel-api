@@ -3,10 +3,8 @@
 @section('title','Project Details')
 
 @section('cdns')
-{{--Fontawesome--}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
-integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" 
-crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Includo il CSS compilato da Vite -->
+@vite('resources/scss/generics.scss',)
 @endsection
 
 @section('content')
@@ -15,7 +13,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     <div>
         <div class="clearfix">
             @if($project->image)
-                <img class="float-start me-5" src="{{asset('storage/' . $project->image)}}" alt="{{$project->title}}">
+                <img class="img-project" src="{{asset('storage/' . $project->image)}}" alt="{{$project->title}}">
                 @endif
             <p>{{$project->content}}</p>
             <div>
@@ -48,7 +46,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             <a href="{{route('admin.projects.edit',$project)}}" class="btn btn-warning">
                 <i class="fa-solid fa-pencil me-1"></i>Modifica</a>
 
-            <form action="{{route('admin.projects.destroy',$project->id)}}" method="POST"
+            <form class="m-0" action="{{route('admin.projects.destroy',$project->id)}}" method="POST"
                 id="form-delete" data-project="{{$project->title}}">
                 @csrf
                 @method('DELETE')
