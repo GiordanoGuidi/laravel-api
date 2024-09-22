@@ -12,7 +12,7 @@
     {{--Title--}}
         <label for="title" class="form-label">Title</label>
         <input type="text" class="form-control @error('title') is-invalid @elseif(old('title','')) is-valid @enderror"
-        id="title" name="title" value="{{old('title',$project->title)}}" required>
+        id="title" name="title" value="{{old('title',$project->title)}}">
         @error('title')
         <div class="ivalid-feedback">
                 {{$message}}
@@ -52,6 +52,30 @@
         </div>
         @enderror
     </div>
+    {{--Technologies--}}
+    <div class="col-8 my-3">
+        <div class="form-group @error('technologies') is-invalid @enderror">
+            <p class="form-label">Seleziona tecnologia utilizzate</p>
+            @foreach ($technologies as $technology)
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="technologies[]"
+                id="technology-{{$technology->id}}" 
+                @if(in_array($technology->id, old('technologies',$prev_technologies ?? [] ))) checked @endif
+                value="{{$technology->id}}">
+                <label class="form-check-label" for="tachnologies[]">{{$technology->label}}</label>
+            </div>
+            @endforeach
+        </div>
+        @error('technologies')
+        <div class="invalid-feedback">
+            {{$message}}
+        </div>
+        @else
+        <div class="form text text-muted">
+            Inserisci la Tecnologia
+        </div>
+        @enderror
+    </div>
     {{--Image--}}
     <div class="col-7">
         <div class="mb-3">
@@ -69,41 +93,17 @@
         @enderror
         </div>
     </div>
-    <div class="col-1">
-        <div class="mb-3">
-        <img src="{{asset( 'storage/' . old('image', 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM='))}}" 
-        alt="#" class="img-fluid" id="preview">
+    <div class="col-2 d-flex align-items-center">
+        <div class="preview-container">
+        <img src="{{ $project->image ? asset( 'storage/' . $project->image) : asset ('storage/project_images/placeholder.jpg')}}" 
+        alt="#"  id="preview">
         </div>
-    </div>
-    {{--Technologies--}}
-    <div class="col-8 my-3">
-        <div class="form-group @error('technologies') is-invalid @enderror">
-            <p class="form-label">Seleziona tecnologia utilizzate</p>
-            @foreach ($technologies as $technology)
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="technologies[]"
-                     id="technology-{{$technology->id}}" 
-                     @if(in_array($technology->id, old('technologies',$prev_technologies ?? [] ))) checked @endif
-                     value="{{$technology->id}}">
-                    <label class="form-check-label" for="tachnologies[]">{{$technology->label}}</label>
-                </div>
-            @endforeach
-        </div>
-        @error('technologies')
-        <div class="invalid-feedback">
-                {{$message}}
-        </div>
-        @else
-        <div class="form text text-muted">
-            Inserisci la Tecnologia
-        </div>
-        @enderror
     </div>
     {{--Content--}}
-    <div class="col-12">
+    <div class="col-12 pt-3">
         <div class="form-floating mb-3">
             <label for="content" class="form-label"></label>
-            <textarea class="form-control @error('content') is-invalid @elseif(old('content','')) is-valid @enderror" 
+            <textarea class="form-control pt-2 @error('content') is-invalid @elseif(old('content','')) is-valid @enderror" 
             id="content" rows="30" name="content">{{old('content',$project->content)}}</textarea>
 
             @error('content')
@@ -141,5 +141,28 @@
     inputTitle.addEventListener('blur', () => {
         inputSlug.value = inputTitle.value.trim().toLowerCase().split(' ').join('-');
     })
+
+    const imageInput = document.getElementById('image');
+    const previewImage = document.getElementById('preview');
+    imageInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            previewImage.src = URL.createObjectURL(file);
+        } else {
+            // Se non viene selezionato un file, mostra l'immagine già salvata o il placeholder
+            previewImage.src = "{{ $project->image ? asset('storage/' . $project->image) : asset('storage/project_images/placeholder.jpg') }}";
+        }
+    });
 </script>
 @endsection
+<style scoped lang="scss">
+    .preview-container{
+        height: 150px;
+        width: 300px
+        
+    }
+    img{
+        height: 100%;
+        width: 100%
+    }
+</style>

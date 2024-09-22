@@ -14,8 +14,8 @@
     {{--Card del progetto--}}
       <div class="card mb-3 my-5">
         <div class="row g-0">
-          <div class="col-md-4 d-flex align-items-center">
-            <img src="{{asset('storage/' . $project->image)}}" class="img-fluid rounded-start" alt="{{$project->title}}">
+          <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <img src="{{asset('storage/' . $project->image)}}" class="img-fluid rounded h-75 w-75" alt="{{$project->title}}">
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -36,7 +36,8 @@
                           <span class="badge rounded-pill text-bg-{{$technology->color}}">{{$technology->label}}</span>
                   @empty
                       <span>Nessuna</span>
-                      </p>
+                </p>
+              </p>
                   @endforelse
               <p class="card-text"><small class="text-muted"><strong>Creato il:</strong> {{$project->created_at}}</small></p>
               <p class="card-text"><small class="text-muted"><strong>Modificato il:</strong> {{$project->updated_at}}</small></p>
